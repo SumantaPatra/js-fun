@@ -41,7 +41,8 @@ const obj = {
             dist:'cuttack'
         }
     },
-    course:[{name:'C++',skill:"high"},{name:'Js',skill:"moderate"}]
+    course:[{name:'C++',skill:"high"},{name:'Js',skill:"moderate"}],
+    hubbies:["playing cricket"]
 }
 
 const newObj = deepCloneCopy(obj)
