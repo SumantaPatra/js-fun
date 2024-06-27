@@ -14,6 +14,12 @@
 // // object.assign and spread opertaor copies one level properties(if its a primitive type) but
 // // not coipes nested level object for that we use custon deep copy method
 
+
+
+
+// we can copy by converting object into string (JSON.stringify) , string doesnot copy the the reference 
+// but its remove undefined value 
+
 // console.log(obj1,obj2)
 
 function deepCloneCopy(obj){
