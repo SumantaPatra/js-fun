@@ -66,16 +66,14 @@ class BinaryTree {
             }
             return
         }
+        this.deleteDataFromTree(root.left,node)
+        this.deleteDataFromTree(root.right,node)
+        
 
     }
 
 
     deleteData(data) {
-
-
-
-
-
         // need to delete data for deleted node
         // if it is a root --> make the left node as root and attach right subtree to left subtree
         // if its a root having either or subtree --> make available node as root
