@@ -1,6 +1,6 @@
 // whatever value we provide in resolve it will acces by then
 // .then((valu1,valu2))--> value 2 is the rej(value)
-
+// Asynchronous tasks need proper management. For that, the ECMA standard specifies an internal queue PromiseJobs, more often referred to as the “microtask queue” (V8 term).
 function loadScript(src){
     return new Promise((resolve,reject)=>{
         resolve(src)
