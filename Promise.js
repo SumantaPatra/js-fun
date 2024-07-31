@@ -1,12 +1,12 @@
 // whatever value we provide in resolve it will acces by then
 // .then((valu1,valu2))--> value 2 is the rej(value)
 // Asynchronous tasks need proper management. For that, the ECMA standard specifies an internal queue PromiseJobs, more often referred to as the “microtask queue” (V8 term).
-function loadScript(src){
-    return new Promise((resolve,reject)=>{
-        resolve(src)
-    })
-}
-
+// return value from one promises will be available for another promises(promise chain)
+// function loadScript(src){
+//     return new Promise((resolve,reject)=>{
+//         resolve(src)
+//     })
+// }
 
 // loadScript("http://ur1.com")
 //          .then((url1)=>{
@@ -15,7 +15,6 @@ function loadScript(src){
 //                 console.log(url1,url2)
 //             })
 //          })
-
 
 // loadScript("/article/promise-chaining/one.js")
 //   .then(function(script1) {
@@ -29,9 +28,6 @@ function loadScript(src){
 //     // to show that they indeed loaded
 //     console.log(script3);
 //   });
-
-
-
 
 //   function fetch(url){
 //     const data = "some data is there"
@@ -47,7 +43,6 @@ function loadScript(src){
 //     })
 //   }
 
-
 // fn('/article/promise-chaining/user.json')
 //   // .then below runs when the remote server responds
 //   .then(function(response) {
@@ -60,39 +55,235 @@ function loadScript(src){
 //     alert(text); // {"name": "iliakan", "isAdmin": true}
 //   });
 
-
 // Promise.resolve(1)  ---> new Promise((res)=>res(1))
-// Promise.resolve(1).then((data)=>console.log(data)) --> rerturn a promise 
+// Promise.resolve(1).then((data)=>console.log(data)) --> rerturn a promise
 // use this when we want to resolve value directly instaed of some logic validation
 
-let promise = new Promise((resolve, reject) => {
-    resolve('Success');
-    // Or: reject('Error');
-  });
-  
-  // Using .then().catch()
-  promise
-    .then(value => {
-      console.log('Resolved with:', value);
-      // Simulate an error
-      throw new Error('Error in then');
-    })
-    .catch(error => {
-      console.error('Caught by catch:', error);
-    });
-  
-  // Using .then(f1, f2)
-  promise
-    .then(
-      value => {
-        console.log('Resolved with:', value);
-        // Simulate an error
-        throw new Error('Error in then');
-      },
-      error => {
-        console.error('Caught by then:', error);
-      }
-    );
+// let promise = new Promise((resolve, reject) => {
+//     resolve('Success');
+//     // Or: reject('Error');
+//   });
 
- // using first throwing error is handled by next block that is catch block
- // second throwing error is not handle by any catch block   
+// Using .then().catch()
+// promise
+//   .then(value => {
+//     console.log('Resolved with:', value);
+//     // Simulate an error
+//     throw new Error('Error in then');
+//   })
+//   .catch(error => {
+//     console.error('Caught by catch:', error);
+//   });
+
+// Using .then(f1, f2)
+// promise
+//   .then(
+//     value => {
+//       console.log('Resolved with:', value);
+//       // Simulate an error
+//       throw new Error('Error in then');
+//     },
+//     error => {
+//       console.error('Caught by then:', error);
+//     }
+//   );
+
+// using first throwing error is handled by next block that is catch block
+// second throwing error is not handle by any catch block
+// promise chaining
+// Promise.resolve().then(()=>{
+//    return "helllo"
+// }).then((data)=>{
+//   console.log(data);
+//   return "hey"
+// }).then((data)=>{
+//   console.log(data);
+// })
+
+const state = {
+  FULLFILED: "fullfiled",
+  REJECTED: "rejected",
+  PENDING: "pending",
+};
+
+class myPromise {
+  #status = state.PENDING;
+  #value;
+  #thenCbs = [];
+  #catchCbs = [];
+  #onSucessBinded = this.#onSuccess.bind(this); //for chaining its help to bind this to current class instance
+  #onFailBinded = this.#onFailure.bind(this);
+
+  constructor(cb) {
+    cb(this.#onSucessBinded, this.#onFailBinded);
+  }
+  #onSuccess(value) {
+    queueMicrotask(()=>{
+      if (this.#status !== state.PENDING) return;
+
+      if(value instanceof myPromise){  // promise return a promise
+        value.then(this.#onSucessBinded,this.#onFailBinded)
+        return 
+      }
+  
+      this.#value = value;
+      this.#status = state.FULLFILED;
+    })
+  }
+  #onFailure() {
+    queueMicrotask(()=>{
+      if (this.#status !== state.PENDING) return;
+
+      if(value instanceof myPromise){  // promise return a promise
+        value.then(this.#onSucessBinded,this.#onFailBinded)
+        return 
+      }
+
+      if(this.#catchCbs.length === 0) throw new Error("unhandled exception")
+  
+      this.#value = value;
+      this.#status = state.REJECTED;
+    })
+
+  }
+  #runCallback() {
+    if (this.state.FULLFILLED === "fullfiled") {
+      this.#thenCbs.forEach((callback) => {
+        callback(this.#value);
+      });
+      this.#thenCbs = [];
+    }
+    if (this.state.REJECTED === "rejected") {
+      this.#catchCbs.forEach((callback) => {
+        callback(this.#value);
+      });
+      this.#thenCbs = [];
+    }
+  }
+
+// When thenCb is null, the user skips the success handling.
+// We resolve the result to ensure the chain continues and the next .then() receives the result.
+// This maintains the promise chain and ensures correct propagation of results and errors.
+
+  then(thenCb, catchCb) {
+    //.then().catch().then()
+    return new myPromise((resolve, reject) => {
+      this.#thenCbs.push((result) => {
+        if (thenCb === null) {
+          resolve(result); // When thenCb is null, it means the user does not care about handling the success case explicitly at that point in the chain. Instead, they might be interested in handling the error case later in the chain with a .catch() 
+       
+          return;
+        }
+        try {
+          resolve(thenCb(result));
+        } catch (error) {
+          reject(error);
+        }
+      });
+      this.#catchCbs.push((result) => {
+        if (catchCb === null) {
+          reject(result);
+          return;
+        }
+        try {
+          resolve(catchCb(result));
+        } catch (error) {
+          reject(error);
+        }
+      });
+      this.#runCallback();
+    });
+  }
+  catch(cb) {
+    return this.then(null, cb);
+  }
+  finally(cb){
+    return this.then(result=>{
+      cb();
+      return result;
+    }, result=>{
+      cb()
+      throw result;
+    })
+  }
+  static resolve(value){
+    return new Promise((resolve)=>{
+      resolve(value)
+    })
+  }
+  static reject(value){
+    return new Promise((resolve)=>{
+      reject(value)
+    })
+  }
+  // return all resolved result in  an array if reject return rejected value only
+  static all(promises){
+    return new myPromise((resolve,reject)=>{
+      let completedPromise =0;
+      const result = [];
+
+      for(let i=0; i<promises.length; i++){
+        const promise = promises[i];
+        promise.then((value)=>{
+           completedPromise++;
+            result[i] = value;
+           if(completedPromise === promise.length){
+            resolve(result)
+           }
+
+        }).catch((err)=>reject(err))
+      }
+
+    })
+
+  } 
+  // return all success and error promise results in an array
+
+  static allSettled(promises){
+   return new myPromise((resolve,reject)=>{
+    let count =0;
+    const result = [];
+    for(let i=0; i<promises.length; i++){
+      const promise = promises[i];
+      promise.then((value)=>{
+       result[i] = {status:state.FULLFILED,value}
+      }).catch((err)=>{
+        result[i] = {status:state.REJECTED,value}
+      }).finally(()=>{
+        count++;
+        if(count === promise.length) resolve(result)
+      })
+    }
+   })
+
+
+  }
+
+  // return the first settled promise(resolve/reject)
+
+  static race(promises){
+    return new myPromise((resolve,reject)=>{
+      promises.forEach((promise)=>promise.then(resolve).catch(reject))
+    })
+
+  }
+
+
+
+
+
+}
+
+// const prmise = new Promise((res,rej)=>{
+
+//   res("hello")
+
+// })
+
+// prmise.then((data)=>{
+//   console.log(data);
+// }).then((data)=>{
+//   console.log(data)
+// }).then((data)=>{
+//   console.log(data);
+// })
