@@ -164,7 +164,7 @@ class myPromise {
 // When thenCb is null, the user skips the success handling.
 // We resolve the result to ensure the chain continues and the next .then() receives the result.
 // This maintains the promise chain and ensures correct propagation of results and errors.
-
+// if then param is not a function simply it skipped
   then(thenCb, catchCb) {
     //.then().catch().then()
     return new myPromise((resolve, reject) => {
