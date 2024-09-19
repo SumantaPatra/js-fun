@@ -166,3 +166,25 @@ obj2.getMessage()
 //   console.log(obj.h()())
 //   console.log(obj.i()())
 
+
+// a.foot.call() makes this point to the window.bar and hence 1 is returned (it also increments bar because of post-increment)
+// a.foo1() this time its a normal function call so this will refer to a and returns 10 (again increments it too)
+// a.foo2.call is similar to the first case, no argument is passed hence this is the window and it prints 2 (again incremented after returning)
+// In a.foo2(), inside the function body foo is executed independently losing context of a. Hence, it again prints global bar i.e. 3
+var bar = 1 // global bar
+function foo() {
+  return this.bar++ // bar is returned and then incremented
+}
+const a = {
+  bar: 10, // local bar
+  foo1: foo,
+  foo2: function() {
+    return foo()
+  },
+} 
+console.log(a.foo1.call()) // 1
+console.log(a.foo1()) // 10
+console.log(a.foo2.call()) // 2
+console.log(a.foo2()) // 3
+
+
