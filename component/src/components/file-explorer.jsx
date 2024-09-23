@@ -73,15 +73,28 @@ const FileExplorer = ({ data,addFolder,isOpen }) => {
   );
 };
 
-const handleAddupdate = (data,id,text,isFolder)=>{
-   data.map((el)=>{
-     if(el.id === id){
-        return {name:text,id:Date.now(),isFolder,child:[]};
-     } else {
-        return handleAddupdate(el,id,text,isFolder)
+const handleAddupdate = (data,targetId,text,isFolder)=>{
+   return data.map((el)=>{
+     if(el.id === targetId){
+        return {...el,name:text,id:Date.now(),isFolder,child:[]};
+     }else if(el.isFolder){
+       return {...el,child:handleAddupdate(el.child,targetId,text,el.isFolder)}
+     }else{
+      return {...el}
      }
 
    })
+}
+
+const hadndleDelete = (data,targetId)=>{
+   return data.map((el)=>{
+     if(el.isFolder){
+       const filteredChild = hadndleDelete(el.child,targetId);
+       return {...el,child: filteredChild}
+     }
+     return el.id === targetId ? null : el;
+   }).filter(Boolean)
+
 }
 
 const FolderExplorer = () => {
