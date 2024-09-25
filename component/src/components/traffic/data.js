@@ -1,0 +1,20 @@
+export const data = {
+        "red":{
+            color:'red',
+            time:"3000",
+            nextColor:"green",
+            id:'red'
+        },
+        "violet":{
+            color:'violet',
+            time:"1000",
+            nextColor:"red",
+            id:'violet'
+        },
+        "green":{
+            color:'green',
+            time:"4000",
+            nextColor:"violet",
+            id:'red'
+        },
+}
