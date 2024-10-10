@@ -13,12 +13,23 @@ function flatObj(obj,prevKey ="",result={}){
               result[newKey] = obj[key]
         }
     }
-
     return result;
 
-
-
 }
+var user = {
+    name: "Vishal",
+    address: {
+      primary: {
+        house: "109",
+        street: {
+          main: "21",
+          cross: "32",
+        },
+      },
+    },
+  };
+
+// console.log(flatObj())
 
 
 
