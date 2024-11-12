@@ -5,6 +5,7 @@ import Gift from './components/gift/gift';
 import ToDo from './components/to-do';
 import { todoData } from './components/to-do/data';
 import TrafficLight from './components/traffic/traffic-light';
+import Table from './components/Table';
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
        {/* <ToDo 
         todos={todoData}
        /> */}
-       <Search/>
-       <Gift/>
+       {/* <Search/> */}
+       {/* <Gift/> */}
+       <Table/>
      </div>
   );
 }
