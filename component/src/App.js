@@ -7,6 +7,7 @@ import { todoData } from './components/to-do/data';
 import TrafficLight from './components/traffic/traffic-light';
 import Table from './components/Table';
 import Calculator from './components/calculator';
+import Star from './components/star';
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
        {/* <Search/> */}
        {/* <Gift/> */}
        {/* <Table/> */}
-       <Calculator/>
+       {/* <Calculator/> */}
+       <Star/>
      </div>
   );
 }
