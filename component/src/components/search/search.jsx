@@ -11,6 +11,8 @@ export default function Search() {
 
  const observer = useRef(null);
  const lastDiv = useCallback((node)=>{
+
+  // console.log("called");
     if(isLoading) return ;
 
     if(observer.current) observer.current.disconnect(); // disconnect prev observer
