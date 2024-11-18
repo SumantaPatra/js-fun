@@ -1,5 +1,5 @@
 import './App.css';
-import FolderExplorer from './components/file-explorer';
+import FolderExplorer from './components/Folder';
 import Search from './components/search/search';
 import Gift from './components/gift/gift';
 import ToDo from './components/to-do';
@@ -23,7 +23,8 @@ function App() {
        {/* <Table/> */}
        {/* <Calculator/> */}
        {/* <Star/> */}
-       <Home/>
+       {/* <Home/> */}
+       <FolderExplorer/>
      </div>
   );
 }

@@ -1,0 +1,34 @@
+export const explorer = {
+    id:"1",
+    name:"root",
+    isFolder:true,
+    items:[
+        {
+            id:"1.1",
+            name:"folder1",
+            isFolder:true,
+            items:[
+                {
+                    id:"1.1.1",
+                    name:"file.txt",
+                    isFolder:false,
+                    items:[]
+                }
+            ]
+        },
+        {
+            id:"1.2",
+            name:"folder2",
+            isFolder:true,
+            items:[
+                {
+                    id:"1.2.1",
+                    name:"index.html",
+                    isFolder:false,
+                    items:[]
+                }
+            ]
+
+        }
+    ]
+}
