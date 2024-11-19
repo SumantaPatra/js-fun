@@ -1,13 +1,20 @@
-function flatObj(obj,prevKey ="",result={}){
+function flatObj(obj,prevKey =""){
+
+    const result = {};
+
     for(let key in obj){
          const newKey = prevKey ? `${prevKey}.${key}` : key;
         if(typeof obj[key] == 'object' && !Array.isArray(obj[key])){
-           flatObj(obj[key],newKey,result)
+          result[newKey] = flatObj(obj[key],newKey)
         }else{
             if(Array.isArray(obj[key])){
                 obj[key].forEach((el,index)=>{
-                    const formedKey = `${key}.${index}`;
-                    result[formedKey] = el;
+                    const tempKey = `${newKey}.${index}`
+                    if(typeof el == 'object' && !Array.isArray(el)){
+                        result[tempKey] = flatObj(el,tempKey)
+                    }else{
+                        result[tempKey] = el;
+                    }
                 })
             }else
               result[newKey] = obj[key]
@@ -51,4 +58,4 @@ const obj = {
     arr:[1,2,3]
 }
 
-console.log(flatObj(obj))
+console.log(flatObj(obj).a)

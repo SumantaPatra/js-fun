@@ -45,7 +45,7 @@ const Table = () => {
     // Create a shallow copy of the products array to avoid modifying the original data
     const temp = [...sorted];
 
-    console.log(temp);
+    // console.log(temp);
 
     switch (config[key].direction) {
       case 1:
