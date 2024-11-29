@@ -8,7 +8,7 @@ import TrafficLight from './components/traffic/traffic-light';
 import Table from './components/Table';
 import Calculator from './components/calculator';
 import Star from './components/star';
-import Home from './components/misc';
+import Home from './components/complete';
 
 function App() {
   return (
@@ -24,7 +24,8 @@ function App() {
        {/* <Calculator/> */}
        {/* <Star/> */}
        {/* <Home/> */}
-       <FolderExplorer/>
+       {/* <FolderExplorer/> */}
+       <Home/>
      </div>
   );
 }
