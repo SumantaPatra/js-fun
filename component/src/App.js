@@ -9,6 +9,7 @@ import Table from './components/Table';
 import Calculator from './components/calculator';
 import Star from './components/star';
 import Home from './components/complete';
+import TicTacToe from './components/tic-tac-toe';
 
 function App() {
   return (
@@ -25,7 +26,8 @@ function App() {
        {/* <Star/> */}
        {/* <Home/> */}
        {/* <FolderExplorer/> */}
-       <Home/>
+       {/* <Home/> */}
+       <TicTacToe/>
      </div>
   );
 }
