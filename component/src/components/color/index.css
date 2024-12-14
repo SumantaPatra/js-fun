@@ -1,0 +1,15 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    height: 300px;
+    width: 300px;
+  }
+  .box {
+    aspect-ratio: 1;
+    border: 2px sold red;
+    cursor: pointer;
+  }
+  .hide {
+    visibility: hidden;
+  }

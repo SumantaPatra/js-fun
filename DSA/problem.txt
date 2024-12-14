@@ -1,0 +1,6 @@
+Dp(1d dp)
+1.total no of ways to reach n. f(n) = f(n-1) + f(n-2)
+2.frog jump. ans = min(arr[n-k] - arr[n] + f(n-k))
+3.maximum sum of non-adjacent element. (take/notake) --> let ans1 = arr[ind] + f(ind-2); let ans2 = 0 + arr[ind-1]
+4.house robber(last house connnected to first)
+Dp(on subsequences(follow order)/subsets(may or maynot follow order))

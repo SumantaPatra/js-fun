@@ -10,8 +10,13 @@ import Calculator from './components/calculator';
 import Star from './components/star';
 import Home from './components/complete';
 import TicTacToe from './components/tic-tac-toe';
+import Grid from './components/color';
+import Parent from './components/renders';
+import Dropdown from './components/dropdown';
+import AuthProvider from './components/dropdown/context';
 
 function App() {
+  const data = [[1,0,1],[1,1,0],[0,1,1]]
   return (
      <div>
        {/* <FolderExplorer/> */}
@@ -27,7 +32,14 @@ function App() {
        {/* <Home/> */}
        {/* <FolderExplorer/> */}
        {/* <Home/> */}
-       <TicTacToe/>
+       {/* <TicTacToe/> */}
+       {/* <Grid data={data}/> */}
+       {/* <Parent/> */}
+       <AuthProvider>
+       <Dropdown>
+        <Dropdown.multiSelect/>
+       </Dropdown>
+       </AuthProvider>
      </div>
   );
 }
