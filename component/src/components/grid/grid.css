@@ -1,0 +1,18 @@
+.grid-cont{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    height: 300px;
+    width: 300px;
+    /* grid-template-rows: 5px; */
+}
+.grid{
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+.blue{
+    background-color: blue;
+}
+.hide{
+    /* opacity: 0px; */
+    visibility: hidden;
+}

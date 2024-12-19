@@ -10,7 +10,7 @@ import Calculator from './components/calculator';
 import Star from './components/star';
 import Home from './components/complete';
 import TicTacToe from './components/tic-tac-toe';
-import Grid from './components/color';
+import Grid from './components/grid/grid';
 import Parent from './components/renders';
 import Dropdown from './components/dropdown';
 import AuthProvider from './components/dropdown/context';
@@ -43,7 +43,8 @@ function App() {
        </Dropdown>
        </AuthProvider> */}
        {/* <SearchDropDown/> */}
-       <ScrollHandler/>
+       {/* <ScrollHandler/> */}
+       <Grid/>
      </div>
   );
 }
