@@ -16,9 +16,6 @@ function evaluate(op1,operator,op2){
     }
 
 }
-
-
-
 function reducer(state,{type,digit}){
     const {currOp,prevOp} = state;
     switch(type){

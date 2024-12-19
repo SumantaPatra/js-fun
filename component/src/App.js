@@ -1,4 +1,4 @@
-import './App.css';
+// import './App.css';
 import FolderExplorer from './components/Folder';
 import Search from './components/search/search';
 import Gift from './components/gift/gift';
@@ -15,6 +15,7 @@ import Parent from './components/renders';
 import Dropdown from './components/dropdown';
 import AuthProvider from './components/dropdown/context';
 import SearchDropDown from './components/searchSelect';
+import ScrollHandler from './components/scroll';
 
 function App() {
   const data = [[1,0,1],[1,1,0],[0,1,1]]
@@ -41,7 +42,8 @@ function App() {
         <Dropdown.multiSelect/>
        </Dropdown>
        </AuthProvider> */}
-       <SearchDropDown/>
+       {/* <SearchDropDown/> */}
+       <ScrollHandler/>
      </div>
   );
 }
